@@ -54,7 +54,9 @@ publishing {
             artifactId = "hamed-sync"
             version = "0.1.0"
 
-            from(components["release"])
+            afterEvaluate {
+                from(components["release"]) // حالا درست کار می‌کند
+            }
         }
     }
 }
