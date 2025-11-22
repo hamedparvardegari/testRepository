@@ -1,10 +1,22 @@
-plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    `maven-publish`
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.4.2") // نسخه مناسب برای compileSdk 36
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
+    }
 }
 
+apply(plugin = "com.android.library")
+apply(plugin = "kotlin-android")
+apply(plugin = "maven-publish")
 
+repositories {
+    google()
+    mavenCentral()
+}
 
 android {
     namespace = "com.parvardegarico.hamedasync"
@@ -12,7 +24,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -26,6 +37,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -46,7 +58,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
 }
 
-
 publishing {
     publications {
         create<MavenPublication>("release") {
@@ -55,7 +66,7 @@ publishing {
             version = "0.1.0"
 
             afterEvaluate {
-                from(components["release"]) // حالا درست کار می‌کند
+                from(components["release"])
             }
         }
     }
