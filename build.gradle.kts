@@ -4,25 +4,11 @@ plugins {
     `maven-publish`
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"]) // یا components["android"] در نسخه‌های قدیمی‌تر
-                groupId = "com.parvardegarico"
-                artifactId = "hamed-sync"
-                version = "0.1.0"
-            }
-        }
-    }
-}
 
 
 android {
     namespace = "com.parvardegarico.hamedasync"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
@@ -58,4 +44,17 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.compose.ui:ui:1.9.5")
     implementation("io.coil-kt:coil-compose:2.7.0")
+}
+
+
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.parvardegarico"
+            artifactId = "hamed-sync"
+            version = "0.1.0"
+
+            from(components["release"])
+        }
+    }
 }
